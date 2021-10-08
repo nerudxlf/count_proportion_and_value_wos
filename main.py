@@ -16,10 +16,12 @@ def count(data: DataFrame, field: str) -> DataFrame:
                 proportion_dict[area] += field_list[i]
                 value_dict[area] += 1
             else:
-                proportion_dict[area] = 0
-                value_dict[area] = 0
-    return pd.DataFrame({"Research Area": proportion_dict.keys(), "Proportion": proportion_dict.values(),
-                         "Values": value_dict.values()})
+                proportion_dict[area] = field_list[i]
+                value_dict[area] = 1
+    result_df: DataFrame = pd.DataFrame({"Research Area": proportion_dict.keys(), "Sum": proportion_dict.values(),
+                                         "Values": value_dict.values()})
+    result_df[field] = result_df["Sum"] / result_df["Values"]
+    return result_df
 
 
 def main():
